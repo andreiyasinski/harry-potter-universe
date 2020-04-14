@@ -1,0 +1,7 @@
+.logoWrapper {
+  flex-grow: 1;
+}
+
+.logo {
+  width: 60px;
+}
