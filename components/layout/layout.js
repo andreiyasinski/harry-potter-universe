@@ -1,5 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -14,6 +14,10 @@ import InputBase from '@material-ui/core/InputBase';
 import clsx from 'clsx';
 import styles from './layout.module.css';
 import { useState } from 'react';
+import ScrollTop from '../scrollTop/scrollTop'
+import { Fab } from "@material-ui/core"
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Link from 'next/link'
 
 const drawerWidth = 240;
 
@@ -113,11 +117,14 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  link: {
+    textDecoration: 'none',
+    color: '#fff'
+  },
 }));
 
-
-
-const Layout = ({children}) => {
+const Layout = (props) => {
+  const { children } = props;
   const classes = useStyles();
   // const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -188,18 +195,34 @@ const Layout = ({children}) => {
         </div>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemText primary="Sorting Hat"/>
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Character"/>
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="House"/>
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Spell"/>
-          </ListItem>
+          <Link href="/">
+            <a className={classes.link}>
+            <ListItem button>
+              <ListItemText primary="Sorting Hat"/>
+            </ListItem>
+            </a>
+          </Link>
+          <Link href="/characters">
+            <a className={classes.link}>
+            <ListItem button>
+              <ListItemText primary="Characters"/>
+            </ListItem>
+            </a>
+          </Link>
+          <Link href="/houses">
+            <a className={classes.link}>
+            <ListItem button>
+              <ListItemText primary="Houses"/>
+            </ListItem>
+            </a>
+          </Link>
+          <Link href="/spells">
+            <a className={classes.link}>
+            <ListItem button>
+              <ListItemText primary="Spells"/>
+            </ListItem>
+            </a>
+          </Link>
         </List>
         <Divider />
       </Drawer>
@@ -209,7 +232,13 @@ const Layout = ({children}) => {
         })}
       >
         <div className={classes.drawerHeader} />
+        <Toolbar style={{minHeight: 0}} id="back-to-top-anchor" />
         {children}
+        <ScrollTop {...props}>
+          <Fab color="primary" size="small" aria-label="scroll back to top">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
       </main>
     </div>
   )
