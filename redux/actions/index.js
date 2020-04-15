@@ -70,3 +70,12 @@ export const getCharacters = () => (dispatch) => {
       dispatch(getCharactersFailure(err));
     });
 };
+
+export const INCREASE_CARD_AMOUNT = 'INCREASE_CARD_AMOUNT';
+
+export const increaseCardAmount = (amount) => ({
+  type: INCREASE_CARD_AMOUNT,
+  payload: {
+    amount
+  },
+});
