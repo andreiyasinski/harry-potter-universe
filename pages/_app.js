@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps, reduxStore }) {
   return (
     <>
       <Head>
-        <title>Sorting Hat</title>
         <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet"></link>
       </Head>
       <Provider store={reduxStore}>

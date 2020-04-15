@@ -23,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     fontFamily: 'inherit',
-    lineHeight: 'inherit'
+    lineHeight: 'inherit',
+    whiteSpace: 'normal',
+    textAlign: 'center'
   }
 }));
 
