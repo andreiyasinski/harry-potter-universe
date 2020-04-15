@@ -9,11 +9,11 @@ const useStyles = makeStyles({
   root: {
     maxWidth: '25%',
     padding: "0 15px",
-    marginBottom: 20
+    marginBottom: 30,
   },
   card: {
     height: '100%',
-    background: '#f0f8ff'
+    background: '#f0f8ff',
   },
   media: {
     height: 140,
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: 0,
     height: 140
-  }
+  },
 });
 
 const CharacterItem = ({item}) => {
@@ -40,14 +40,14 @@ const CharacterItem = ({item}) => {
               <CardMedia
                 className={classes.media}
                 image={`/static/images/${house}_hi-res.png`}
-                title="Contemplative Reptile"
+                title={name}
               />
               <img className={classes.symbol} src={`/static/images/${house}_House_Symbol.svg`} alt="Symbol" />
             </> :
             <CardMedia
               className={classes.media}
               image={`/static/images/Hogwarts.jpg`}
-              title="Contemplative Reptile"
+              title={name}
             />
           }
           

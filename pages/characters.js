@@ -11,6 +11,7 @@ const Characters = () => {
   useEffect(() => {
     dispatch(getCharacters())
   }, [])
+  
 
   return (
     <div>
