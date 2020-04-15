@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import withReduxStore from '../utils/withRedux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Head from 'next/head';
 import theme from '../theme/theme';
 import Layout from '../components/layout/layout';
 import App from 'next/app'
@@ -17,14 +18,27 @@ function MyApp({ Component, pageProps, reduxStore }) {
   }, []);
 
   return (
-    <Provider store={reduxStore}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </Provider>
+    <>
+      <Head>
+        <title>Sorting Hat</title>
+        <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet"></link>
+      </Head>
+      <Provider store={reduxStore}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <style jsx global>{`
+          * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+        `}</style>
+        </ThemeProvider>
+      </Provider>
+    </>
   )
 }
 

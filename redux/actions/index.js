@@ -34,3 +34,39 @@ export const getFaculty = () => (dispatch) => {
       dispatch(getFacultyFailure(err));
     });
 };
+
+export const GET_CHARACTERS_REQUEST = 'GET_CHARACTERS_REQUEST';
+export const GET_CHARACTERS_SUCCESS = 'GET_CHARACTERS_SUCCESS';
+export const GET_CHARACTERS_FAILURE = 'GET_CHARACTERS_FAILURE';
+
+export const getCharactersRequest = () => {
+  return {
+    type: GET_CHARACTERS_REQUEST
+  }
+}
+
+export const getCharactersSuccess = (items) => ({
+  type: GET_CHARACTERS_SUCCESS,
+  payload: {
+    items
+  },
+});
+
+export const getCharactersFailure = (error) => ({
+  type: GET_CHARACTERS_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const getCharacters = () => (dispatch) => {
+  dispatch(getCharactersRequest());
+  
+  return axios(`https://www.potterapi.com/v1/characters?key=$2a$10$yKgF8QD9Uz5dAGtiJ46VcumjgC.X2vuQhIBuIfZRtv9z45oLH.jkS`)
+    .then((response) => {
+      dispatch(getCharactersSuccess(response.data));
+    })
+    .catch((err) => {
+      dispatch(getCharactersFailure(err));
+    });
+};
