@@ -1,4 +1,3 @@
-import { useSelector, useDispatch } from "react-redux";
 import CharacterItem from "./characterItem/characterItem";
 import { CircularProgress, makeStyles, fade, Typography } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
@@ -6,7 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import styles from './charactersList.module.css';
 import { useState } from "react";
 import { useEffect } from "react";
-import { increaseCardAmount } from "../../redux/actions";
+// import { increaseCardAmount } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -52,31 +51,27 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     textAlign: 'center',
-    color: '#fff'
+    color: '#fff',
+    whiteSpace: 'normal',
   }
 }));
 
-const CharactrersList = () => {
+const CharactrersList = ({characters, err}) => {
   const [searchInput, setSearchInput] = useState('');
-
+  const [amount, setAmount] = useState(28);
   const handleInput = (e) => {
     setSearchInput(e.target.value)
   }
-  
-  const amount = useSelector(state => state.cardAmount.amount)
-  const { isFetching, error } = useSelector(state => state.characters);
-  const items = useSelector(state => (
-    state.characters.items.filter(item => 
-      item.name.toLowerCase().includes(searchInput.toLowerCase().trim())
-      ).slice(0, amount)
-  ));
+
+  const items = characters.filter(item => 
+    item.name.toLowerCase().includes(searchInput.toLowerCase().trim())
+  ).slice(0, amount);
 
   const classes = useStyles();
-  const dispatch = useDispatch()
   
   const handleCardAmount = () => {
     if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {        
-      dispatch(increaseCardAmount(12))
+      setAmount(prev => prev + 12)
     }
   }
   
@@ -84,6 +79,15 @@ const CharactrersList = () => {
     window.addEventListener('scroll', handleCardAmount)
     return () => window.removeEventListener('scroll', handleCardAmount)
   }, [])
+
+  if (err) {
+    return (
+      <Typography variant="h4" noWrap className={classes.typography}>
+        Something went wrong. Please reload the page.
+      </Typography>
+    )
+    
+  }
 
   return (
     <div id="test">
@@ -102,7 +106,7 @@ const CharactrersList = () => {
           onChange={handleInput}
         />
       </div>
-      {
+      {/* {
         isFetching && <CircularProgress color="secondary" className={styles.loader} />
       }
       {
@@ -120,6 +124,19 @@ const CharactrersList = () => {
             ))
           }
         </ul>
+      } */}
+      <ul className={styles.list}>
+        {
+          items.map(item => (
+            <CharacterItem item={item} key={item._id} />
+          ))
+        }
+      </ul>
+      {
+        characters.length > amount && !searchInput &&
+        <div className={styles.loaderWrapper}>
+          <CircularProgress color="secondary" />
+        </div>
       }
     </div>
   );

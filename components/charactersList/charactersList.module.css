@@ -5,11 +5,17 @@
   margin: 0 -15px;
 }
 
-.loader {
+/* .loader {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   margin: auto;
+} */
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
 }

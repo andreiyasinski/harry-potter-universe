@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: '25%',
+    width: '25%',
     padding: "0 15px",
     marginBottom: 30,
   },
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 const CharacterItem = ({item}) => {
-  const { house, name } = item;
+  const { name, house } = item;
 
   const classes = useStyles();
 

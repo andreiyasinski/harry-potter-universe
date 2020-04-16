@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Provider } from "react-redux";
 import withReduxStore from '../utils/withRedux';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -8,7 +8,23 @@ import theme from '../theme/theme';
 import Layout from '../components/layout/layout';
 import App from 'next/app'
 
+import { useRouter } from "next/dist/client/router";
+import { CircularProgress, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  progress: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    margin: 'auto'
+  }
+}))
+
 function MyApp({ Component, pageProps, reduxStore }) {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -16,6 +32,24 @@ function MyApp({ Component, pageProps, reduxStore }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+
+  const classes = useStyles();
+  const router = useRouter();
+  
+  useEffect(() => {
+      const handleStart = (url) => (url !== router.pathname) && setLoading(true);
+      const handleComplete = (url) => (url !== router.pathname) && setLoading(false);
+
+      router.events.on('routeChangeStart', handleStart)
+      router.events.on('routeChangeComplete', handleComplete)
+      router.events.on('routeChangeError', handleComplete)
+
+      return () => {
+          router.events.off('routeChangeStart', handleStart)
+          router.events.off('routeChangeComplete', handleComplete)
+          router.events.off('routeChangeError', handleComplete)
+      }
+  })
 
   return (
     <>
@@ -27,7 +61,10 @@ function MyApp({ Component, pageProps, reduxStore }) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Layout>
-            <Component {...pageProps} />
+            {
+              loading ? <CircularProgress color="secondary" className={classes.progress} /> : <Component {...pageProps}  />
+            }
+            
           </Layout>
           <style jsx global>{`
           * {
@@ -42,8 +79,14 @@ function MyApp({ Component, pageProps, reduxStore }) {
   )
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
+// MyApp.getInitialProps = async (appContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext);
+  
+//   return { ...appProps }
+// }
+
+export async function getStaticProps(appContext) {
   const appProps = await App.getInitialProps(appContext);
   
   return { ...appProps }

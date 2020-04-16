@@ -47,7 +47,7 @@ const Home = () => {
       <div className={classes.imageWrapper}>
         <img className={classes.image} src="/static/images/sortinghat.png" alt="sorting hat" />
       </div>
-      <Button className={classes.batton} onClick={handleClick} variant="contained" color="secondary">
+      <Button className={classes.batton} size="large" onClick={handleClick} variant="contained" color="secondary">
         Find out faculty
       </Button>
       {
