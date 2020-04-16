@@ -74,13 +74,17 @@ const CharactrersList = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
   
-  useEffect(() => (
-    window.addEventListener('scroll', function() {
-      if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {        
-        dispatch(increaseCardAmount(12))
-      }
-    })
-  ),[])
+  const handleCardAmount = () => {
+    if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {        
+      dispatch(increaseCardAmount(12))
+    }
+  }
+  
+  useEffect(() => {
+    window.addEventListener('scroll', handleCardAmount)
+    return () => window.removeEventListener('scroll', handleCardAmount)
+  }, [])
+
   return (
     <div id="test">
       <div className={classes.search}>
