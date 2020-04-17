@@ -1,5 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -44,9 +44,24 @@ const useStyles = makeStyles((theme) => ({
   hide: {
     display: 'none',
   },
+  drawerWrapper: {
+    [theme.breakpoints.down(1024)]: {
+      position: 'fixed',
+      width: '100%',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      zIndex: 10,
+      background: 'rgba(0,0,0,.6)',
+    }
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    [theme.breakpoints.down(1024)]: {
+      position: 'absolute'
+    }
   },
   drawerPaper: {
     width: drawerWidth,
@@ -71,7 +86,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -drawerWidth,
     background: "url(/static/images/bg.jpg)",
     minHeight: "100vh",
-    position: "relative"
+    position: "relative",
+    [theme.breakpoints.down(1024)]: {
+      marginLeft: 0
+    }
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -89,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     width: 50
+  },
+  logoLink: {
+    display: 'inline-block'
   }
 }));
 
@@ -104,6 +125,12 @@ const Layout = (props) => {
   
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const close = (e) => {
+    if (e.currentTarget === e.target) {
+      setOpen(false);
+    }
   };
   
   return (
@@ -126,7 +153,7 @@ const Layout = (props) => {
           </IconButton>
           <div className={classes.logoWrapper}>
             <Link href="/">
-              <a><img className={classes.logo} src="/static/images/logo.png" alt="logo" /></a>
+              <a className={classes.logoLink}><img className={classes.logo} src="/static/images/logo.png" alt="logo" /></a>
             </Link>
           </div>
           {/* <div className={classes.search}>
@@ -144,59 +171,61 @@ const Layout = (props) => {
           </div> */}
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton
-            onClick={handleDrawerClose}
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            className={classes.menuButton}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <Link href="/">
-            <a className={classes.link}>
-            <ListItem button>
-              <ListItemText primary="Sorting Hat"/>
-            </ListItem>
-            </a>
-          </Link>
-          <Link href="/characters">
-            <a className={classes.link}>
-            <ListItem button>
-              <ListItemText primary="Characters"/>
-            </ListItem>
-            </a>
-          </Link>
-          <Link href="/houses">
-            <a className={classes.link}>
-            <ListItem button>
-              <ListItemText primary="Houses"/>
-            </ListItem>
-            </a>
-          </Link>
-          <Link href="/spells">
-            <a className={classes.link}>
-            <ListItem button>
-              <ListItemText primary="Spells"/>
-            </ListItem>
-            </a>
-          </Link>
-        </List>
-        <Divider />
-      </Drawer>
+      <div className={open ? classes.drawerWrapper : undefined} onClick={close}>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton
+              onClick={handleDrawerClose}
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              className={classes.menuButton}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <Link href="/">
+              <a className={classes.link}>
+              <ListItem button>
+                <ListItemText primary="Sorting Hat"/>
+              </ListItem>
+              </a>
+            </Link>
+            <Link href="/characters">
+              <a className={classes.link}>
+              <ListItem button>
+                <ListItemText primary="Characters"/>
+              </ListItem>
+              </a>
+            </Link>
+            <Link href="/houses">
+              <a className={classes.link}>
+              <ListItem button>
+                <ListItemText primary="Houses"/>
+              </ListItem>
+              </a>
+            </Link>
+            <Link href="/spells">
+              <a className={classes.link}>
+              <ListItem button>
+                <ListItemText primary="Spells"/>
+              </ListItem>
+              </a>
+            </Link>
+          </List>
+          <Divider />
+        </Drawer>
+      </div>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,

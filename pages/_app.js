@@ -56,6 +56,7 @@ function MyApp({ Component, pageProps, reduxStore }) {
       <Head>
         <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet"></link>
         <link rel="icon" href="/static/images/favicon.svg"></link>
+        <title>Harry Potter Universe</title>
       </Head>
       <Provider store={reduxStore}>
         <ThemeProvider theme={theme}>

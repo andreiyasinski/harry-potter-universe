@@ -5,18 +5,27 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '25%',
     padding: "0 15px",
     marginBottom: 30,
+    [theme.breakpoints.down('md')]: {
+      width: '33.3333%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '50%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    },
   },
   card: {
     height: '100%',
     background: '#f0f8ff',
   },
   cardContent: {
-    height: '100%'
+    // height: '100%'
   },
   cardActionArea: {
     height: '100%'
@@ -32,8 +41,13 @@ const useStyles = makeStyles({
   },
   desc: {
     color: '#000'
+  },
+  name: {
+    [theme.breakpoints.down('md')]: {
+      fontSize: 18
+    },
   }
-});
+}));
 
 const CharacterItem = ({item, searchInput}) => {
   const { name, house, school, role, species, bloodStatus, alias, wand } = item;
