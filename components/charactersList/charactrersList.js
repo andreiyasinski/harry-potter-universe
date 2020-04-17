@@ -2,7 +2,6 @@ import CharacterItem from "./characterItem/characterItem";
 import { CircularProgress, makeStyles, fade, Typography } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import styles from './charactersList.module.css';
 import { useState } from "react";
 import { useEffect } from "react";
 // import { increaseCardAmount } from "../../redux/actions";
@@ -53,6 +52,17 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: '#fff',
     whiteSpace: 'normal',
+  },
+  list: {
+    listStyle: 'none',
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: '0 -15px'
+  },
+  loaderWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '15px 0',
   }
 }));
 
@@ -125,16 +135,16 @@ const CharactrersList = ({characters, err}) => {
           }
         </ul>
       } */}
-      <ul className={styles.list}>
+      <ul className={classes.list}>
         {
           items.map(item => (
-            <CharacterItem item={item} key={item._id} />
+            <CharacterItem item={item} key={item._id} searchInput={searchInput} />
           ))
         }
       </ul>
       {
         characters.length > amount && !searchInput &&
-        <div className={styles.loaderWrapper}>
+        <div className={classes.loaderWrapper}>
           <CircularProgress color="secondary" />
         </div>
       }

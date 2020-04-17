@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -15,25 +15,43 @@ const useStyles = makeStyles({
     height: '100%',
     background: '#f0f8ff',
   },
+  cardContent: {
+    height: '100%'
+  },
+  cardActionArea: {
+    height: '100%'
+  },
   media: {
     height: 140,
+    position: 'relative'
   },
   symbol: {
     position: 'absolute',
     top: 0,
     height: 140
   },
+  desc: {
+    color: '#000'
+  }
 });
 
-const CharacterItem = ({item}) => {
-  const { name, house } = item;
+const CharacterItem = ({item, searchInput}) => {
+  const { name, house, school, role, species, bloodStatus, alias, wand } = item;
 
   const classes = useStyles();
+
+  const createMarkup = () => {
+    if(searchInput.trim()) {
+      var re = new RegExp(`${searchInput.trim()}`, 'gi')
+      return {__html: name.replace(re, '<span style="background: #ffe633">'+ "$&" +'</span>')};
+    }
+    return {__html: name};
+  }
 
   return (
     <li className={classes.root}>
       <Card className={classes.card}>
-        <CardActionArea className={classes.cardActionArea}>
+        {/* <CardActionArea className={classes.cardActionArea}> */}
           {
             house ?
             <>
@@ -41,8 +59,9 @@ const CharacterItem = ({item}) => {
                 className={classes.media}
                 image={`/static/images/${house}_hi-res.png`}
                 title={name}
-              />
-              <img className={classes.symbol} src={`/static/images/${house}_House_Symbol.svg`} alt="Symbol" />
+              >
+                <img className={classes.symbol} src={`/static/images/${house}_House_Symbol.svg`} alt="Symbol" />
+              </CardMedia>
             </> :
             <CardMedia
               className={classes.media}
@@ -50,17 +69,52 @@ const CharacterItem = ({item}) => {
               title={name}
             />
           }
-          
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-            </Typography>
+          <CardContent className={classes.cardContent}>
+            <Typography className={classes.name} gutterBottom variant="h5" component="h2" dangerouslySetInnerHTML={createMarkup()} />
+            {
+              !!alias && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>Alias:</span> {alias}
+              </Typography>
+            }
+            {
+              !!role && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>Role:</span> {role}
+              </Typography>
+            }
+            {
+              !!house && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>House:</span> {house}
+              </Typography>
+            }
+            {
+              !!school && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>School:</span> {school}
+              </Typography>
+            }
+            {
+              !!wand && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>Wand:</span> {wand}
+              </Typography>
+            }
+            {
+              !!species && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>Species:</span> {species}
+              </Typography>
+            }
+            {
+              !!bloodStatus && 
+              <Typography variant="body2" color="textSecondary" component="p">
+                <span className={classes.desc}>Blood status:</span> {bloodStatus}
+              </Typography>
+            }
           </CardContent>
-        </CardActionArea>
+        {/* </CardActionArea> */}
       </Card>
     </li>
   );
