@@ -13,10 +13,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // import InputBase from '@material-ui/core/InputBase';
 import clsx from 'clsx';
 import { useState } from 'react';
-import ScrollTop from '../scrollTop/scrollTop'
-import { Fab } from "@material-ui/core"
+import ScrollTop from '../scrollTop/scrollTop';
+import { Fab } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Link from 'next/link'
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -54,19 +54,19 @@ const useStyles = makeStyles((theme) => ({
       left: 0,
       zIndex: 10,
       background: 'rgba(0,0,0,.6)',
-    }
+    },
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
     [theme.breakpoints.down(1024)]: {
-      position: 'absolute'
-    }
+      position: 'absolute',
+    },
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#263238",
-    color: "#fff"
+    backgroundColor: '#263238',
+    color: '#fff',
   },
   drawerHeader: {
     display: 'flex',
@@ -84,12 +84,12 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
-    background: "url(/static/images/bg.jpg)",
-    minHeight: "100vh",
-    position: "relative",
+    background: 'url(/static/images/bg.jpg)',
+    minHeight: '100vh',
+    position: 'relative',
     [theme.breakpoints.down(1024)]: {
-      marginLeft: 0
-    }
+      marginLeft: 0,
+    },
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -100,17 +100,17 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: '#fff'
+    color: '#fff',
   },
   logoWrapper: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   logo: {
-    width: 50
+    width: 50,
   },
   logoLink: {
-    display: 'inline-block'
-  }
+    display: 'inline-block',
+  },
 }));
 
 const Layout = (props) => {
@@ -122,7 +122,7 @@ const Layout = (props) => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -132,7 +132,7 @@ const Layout = (props) => {
       setOpen(false);
     }
   };
-  
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -153,7 +153,13 @@ const Layout = (props) => {
           </IconButton>
           <div className={classes.logoWrapper}>
             <Link href="/">
-              <a className={classes.logoLink}><img className={classes.logo} src="/static/images/logo.png" alt="logo" /></a>
+              <a className={classes.logoLink}>
+                <img
+                  className={classes.logo}
+                  src="/static/images/logo.png"
+                  alt="logo"
+                />
+              </a>
             </Link>
           </div>
           {/* <div className={classes.search}>
@@ -196,30 +202,30 @@ const Layout = (props) => {
           <List>
             <Link href="/">
               <a className={classes.link}>
-              <ListItem button>
-                <ListItemText primary="Sorting Hat"/>
-              </ListItem>
+                <ListItem button onClick={handleDrawerClose}>
+                  <ListItemText primary="Sorting Hat" />
+                </ListItem>
               </a>
             </Link>
             <Link href="/characters">
               <a className={classes.link}>
-              <ListItem button>
-                <ListItemText primary="Characters"/>
-              </ListItem>
+                <ListItem button onClick={handleDrawerClose}>
+                  <ListItemText primary="Characters" />
+                </ListItem>
               </a>
             </Link>
             <Link href="/houses">
               <a className={classes.link}>
-              <ListItem button>
-                <ListItemText primary="Houses"/>
-              </ListItem>
+                <ListItem button onClick={handleDrawerClose}>
+                  <ListItemText primary="Houses" />
+                </ListItem>
               </a>
             </Link>
             <Link href="/spells">
               <a className={classes.link}>
-              <ListItem button>
-                <ListItemText primary="Spells"/>
-              </ListItem>
+                <ListItem button onClick={handleDrawerClose}>
+                  <ListItemText primary="Spells" />
+                </ListItem>
               </a>
             </Link>
           </List>
@@ -232,7 +238,7 @@ const Layout = (props) => {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Toolbar style={{minHeight: 0}} id="back-to-top-anchor" />
+        <Toolbar style={{ minHeight: 0 }} id="back-to-top-anchor" />
         {children}
         <ScrollTop {...props}>
           <Fab color="primary" size="small" aria-label="scroll back to top">
@@ -241,10 +247,7 @@ const Layout = (props) => {
         </ScrollTop>
       </main>
     </div>
-  )
+  );
 };
 
 export default Layout;
-
-
-

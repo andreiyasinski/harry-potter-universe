@@ -1,4 +1,4 @@
-import CharacterItem from './characterItem/characterItem';
+import SpellItem from './spellItem/spellItem';
 import {
   CircularProgress,
   makeStyles,
@@ -71,16 +71,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CharactrersList = ({ characters, err }) => {
+const SpellsList = ({ spells, err }) => {
   const [searchInput, setSearchInput] = useState('');
   const [amount, setAmount] = useState(28);
   const handleInput = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const items = characters
+  const items = spells
     .filter((item) =>
-      item.name.toLowerCase().includes(searchInput.toLowerCase().trim())
+      item.spell.toLowerCase().includes(searchInput.toLowerCase().trim())
     )
     .slice(0, amount);
 
@@ -112,7 +112,7 @@ const CharactrersList = ({ characters, err }) => {
   return (
     <div>
       <Typography variant="h4" noWrap className={classes.typography}>
-        Charactrers
+        Spells
       </Typography>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -131,10 +131,10 @@ const CharactrersList = ({ characters, err }) => {
       </div>
       <ul className={classes.list}>
         {items.map((item) => (
-          <CharacterItem item={item} key={item._id} searchInput={searchInput} />
+          <SpellItem item={item} key={item._id} searchInput={searchInput} />
         ))}
       </ul>
-      {characters.length > amount && !searchInput && (
+      {SpellItem.length > amount && !searchInput && (
         <div className={classes.loaderWrapper}>
           <CircularProgress color="secondary" />
         </div>
@@ -143,4 +143,4 @@ const CharactrersList = ({ characters, err }) => {
   );
 };
 
-export default CharactrersList;
+export default SpellsList;
