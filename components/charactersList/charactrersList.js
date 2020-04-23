@@ -1,10 +1,5 @@
 import CharacterItem from './characterItem/characterItem';
-import {
-  CircularProgress,
-  makeStyles,
-  fade,
-  Typography,
-} from '@material-ui/core';
+import { CircularProgress, makeStyles, fade, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { useState, useEffect } from 'react';
@@ -71,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CharactrersList = ({ characters, err }) => {
+const CharactersList = ({ characters, err }) => {
   const [searchInput, setSearchInput] = useState('');
   const [amount, setAmount] = useState(28);
   const handleInput = (e) => {
@@ -79,17 +74,14 @@ const CharactrersList = ({ characters, err }) => {
   };
 
   const items = characters
-    .filter((item) =>
-      item.name.toLowerCase().includes(searchInput.toLowerCase().trim())
-    )
+    .filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase().trim()))
     .slice(0, amount);
 
   const classes = useStyles();
 
   const handleCardAmount = () => {
     if (
-      document.documentElement.scrollHeight -
-        document.documentElement.scrollTop ===
+      document.documentElement.scrollHeight - document.documentElement.scrollTop ===
       document.documentElement.clientHeight
     ) {
       setAmount((prev) => prev + 12);
@@ -143,4 +135,4 @@ const CharactrersList = ({ characters, err }) => {
   );
 };
 
-export default CharactrersList;
+export default CharactersList;

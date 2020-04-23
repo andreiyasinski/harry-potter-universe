@@ -1,6 +1,6 @@
-import axios from "axios";
-import CharactrersList from "../components/charactersList/charactrersList";
-import Head from "next/head";
+import axios from 'axios';
+import CharactrersList from '../components/charactersList/charactrersList';
+import Head from 'next/head';
 
 const Characters = ({ characters, err }) => {
   return (
@@ -22,7 +22,7 @@ export async function getStaticProps(context) {
 
   try {
     const res = await axios(
-      "https://www.potterapi.com/v1/characters?key=$2a$10$yKgF8QD9Uz5dAGtiJ46VcumjgC.X2vuQhIBuIfZRtv9z45oLH.jkS"
+      'https://www.potterapi.com/v1/characters?key=$2a$10$yKgF8QD9Uz5dAGtiJ46VcumjgC.X2vuQhIBuIfZRtv9z45oLH.jkS'
     );
     characters = res.data;
   } catch (error) {
